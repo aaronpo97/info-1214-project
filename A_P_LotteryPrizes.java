@@ -122,9 +122,17 @@ public class A_P_LotteryPrizes
             e.printStackTrace();
             System.exit(0);
         }
-
+        /**
+         * Using the getNextSeries method from A_P_ProjectMethods, get the winning
+         * numbers from the file.
+         */
         int[] winningNumbers = A_P_ProjectMethods.getNextSeries(fileInput);
 
+        /**
+         * Create the report for the lottery prize.
+         * 
+         * Print the lottery name, total prize pool, and winning numbers to the console.
+         */
         System.out.printf("\n%s\n\nLottery Prize Report\n\n%s\n\n", LINE_SEPARATOR,
                 LINE_SEPARATOR);
 
