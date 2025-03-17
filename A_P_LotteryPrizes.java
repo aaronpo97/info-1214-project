@@ -1,11 +1,12 @@
 
-/**
+/*
  * Program Name: A_P_LotteryPrizes
  *
- * Purpose: This is an application that analyzes ticket number data contained
- * ina a data file to determine which ticket holders have won a prize, how many
- * will have to share a prize, and how much money they will receive.
- * 
+ * Purpose: This is an application that analyzes ticket number data
+ * 					contained in a data file to determine which ticket
+ * 					holders have won a prize, how many will have to share a
+ * 					prize, and how much money they will receive.
+ *
  * Coder: Aaron Po - 1305057
  *
  * Date: April 9, 2025
@@ -15,133 +16,150 @@ import java.util.*;
 import java.io.*;
 
 public class A_P_LotteryPrizes
+
 {
-    public static void main(String[] args)
-    {
-        /**
-         * Set up a Scanner object to read input from the console.
-         */
-        Scanner input = new Scanner(System.in);
+	public static void main(String[] args)
+	{
+		/*
+		 * Set up a Scanner object to read input from the console.
+		 */
+		Scanner input = new Scanner(System.in);
 
-        /**
-         * Set up variables to store the title and description of the lottery
-         * application.
-         * 
-         * Print the title and description to the console.
-         */
-        final String APP_NAME = "AARON'S LOTTERY PRIZE ANALYZER";
-        final String LOTTERY_DESCRIPTION = "Remember, it's not about winning. It's about the thrill of almost winning!";
-        final String LINE_SEPARATOR = "*************************************************"
-                + "******************************************"
-                + "******************************************";
+		/*
+		 * Set up variables to store the title and description of the lottery
+		 * application.
+		 *
+		 * Print the title and description to the console.
+		 */
+		final String APP_NAME = "AARON'S LOTTERY PRIZE ANALYZER";
 
-        System.out.printf("%s\n\n%s\n%s\n\n%s\n\n", LINE_SEPARATOR, APP_NAME,
-                LOTTERY_DESCRIPTION, LINE_SEPARATOR);
+		final String LOTTERY_DESCRIPTION = "Remember, it's not about winning. "
+				+ "It's about the thrill of almost winning!";
 
-        String tempString;
-        int tempInt;
-        String lotteryName;
-        int prizePoolMoney;
+		final String LINE_SEPARATOR = "*************************************************"
+				+ "******************************************"
+				+ "******************************************";
 
-        int numTickets = 0;
+		System.out.printf("%s\n\n%s\n%s\n\n%s\n\n", LINE_SEPARATOR, APP_NAME,
+				LOTTERY_DESCRIPTION, LINE_SEPARATOR);
 
-        while (true)
-        {
-            /**
-             * Prompt the user to enter the name of the lottery.
-             * 
-             * If the name is less than 5 characters, prompt the user to enter a name that
-             * is 5 characters or more.
-             */
+		String tempString;
+		int tempInt;
+		String lotteryName;
+		int prizePoolMoney;
 
-            System.out.print("Please enter the name of the lottery: ");
-            tempString = input.nextLine();
-            if (tempString.length() < 5)
-            {
-                System.out.println(
-                        "\tThe name of the lottery must be 5 characters or more.");
-                continue;
-            }
+		int numTickets = 0;
 
-            lotteryName = tempString;
-            break;
-        }
+		while (true)
+		{
+			/*
+			 * Prompt the user to enter the name of the lottery.
+			 *
+			 * If the name is less than 5 characters, prompt the user to enter a name
+			 * that is 5 characters or more.
+			 */
 
-        while (true)
-        {
-            /**
-             * Prompt the user to enter the amount of money in the prize pool.
-             * 
-             * If the user enters a non-integer value, prompt the user to enter a valid
-             * number.
-             * 
-             * If the user enters a value less than $1000, prompt the user to enter a
-             * number that is at least $1000.
-             */
-            System.out.print(
-                    "Please enter the amount of money in the prize pool (no cents): $");
-            if (!input.hasNextInt())
-            {
-                tempString = input.nextLine();
-                System.out.printf("\tYou entered %s. Please enter a valid number.\n",
-                        tempString);
-                continue;
-            }
+			System.out.print("Please enter the name of the lottery: ");
+			tempString = input.nextLine();
 
-            tempInt = input.nextInt();
-            // flush the input buffer
-            input.nextLine();
+			if (tempString.length() < 5)
+			{
+				System.out.println(
+						"\tThe name of the lottery must be 5 characters or more.");
+				continue;
+			}
 
-            if (tempInt < 1000)
-            {
-                System.out.println("\tThe prize pool must be at least $1000.");
-                continue;
-            }
+			lotteryName = tempString;
+			break;
+		}
 
-            prizePoolMoney = tempInt;
-            break;
-        }
+		while (true)
+		{
+			/*
+			 * Prompt the user to enter the amount of money in the prize pool.
+			 *
+			 * If the user enters a non-integer value, prompt the user to enter a
+			 * valid number.
+			 *
+			 * If the user enters a value less than $1000, prompt the user to enter a
+			 * number that is at least $1000.
+			 */
+			System.out.print(
+					"Please enter the amount of money in the prize pool (no cents): $");
 
-        /**
-         * Prompt the user to enter the name of the data file.
-         */
-        String fileName;
+			if (!input.hasNextInt())
+			{
+				tempString = input.nextLine();
+				System.out.printf("\tYou entered %s. Please enter a valid number.\n",
+						tempString);
+				continue;
+			}
 
-        System.out.print("Please enter the path for the data file: ");
-        fileName = input.nextLine();
-        File file = new File(fileName);
+			tempInt = input.nextInt();
+			// flush the input buffer
+			input.nextLine();
 
-        Scanner fileInput = null;
-        try
-        {
-            fileInput = new Scanner(file);
-        }
-        catch (FileNotFoundException e)
-        {
-            System.out.printf("The file %s does not exist.\n", fileName);
-            e.printStackTrace();
-            System.exit(0);
-        }
-        /**
-         * Using the getNextSeries method from A_P_ProjectMethods, get the winning
-         * numbers from the file.
-         */
-        int[] winningNumbers = A_P_ProjectMethods.getNextSeries(fileInput);
+			if (tempInt < 1000)
+			{
+				System.out.println("\tThe prize pool must be at least $1000.");
+				continue;
+			}
 
-        /**
-         * Create the report for the lottery prize.
-         * 
-         * Print the lottery name, total prize pool, and winning numbers to the console.
-         */
-        System.out.printf("\n%s\n\nLottery Prize Report\n\n%s\n\n", LINE_SEPARATOR,
-                LINE_SEPARATOR);
+			prizePoolMoney = tempInt;
+			break;
+		}
 
-        System.out.printf("Lottery Name:\t\t%s\n", lotteryName);
-        System.out.printf("Total prize pool:\t$%,d\n", prizePoolMoney);
-        System.out.printf("Winning Numbers:\t%s\n\n",
-                A_P_ProjectMethods.formatTicketNumbers(winningNumbers));
+		/**
+		 * Prompt the user to enter the name of the data file.
+		 */
+		String fileName;
 
-        input.close();
-    } // end main
+		System.out.print("Please enter the path for the data file: ");
+		fileName = input.nextLine();
+		File file = new File(fileName);
+
+		Scanner fileInput = null;
+		try
+		{
+
+			fileInput = new Scanner(file);
+		}
+		catch (FileNotFoundException e)
+		{
+			System.out.printf("The file %s does not exist.\n", fileName);
+			e.printStackTrace();
+			System.exit(0);
+		}
+
+		/*
+		 * Using the getNextSeries method from A_P_ProjectMethods, get the winning
+		 * numbers from the file.
+		 */
+		int[] winningNumbers = A_P_ProjectMethods.getNextSeries(fileInput);
+
+		/*
+		 * Create the report for the lottery prize.
+		 *
+		 * Print the lottery name, total prize pool, and winning numbers to the
+		 * console.
+		 */
+
+		System.out.printf("\n%s\n\nLottery Prize Report\n\n%s\n\n", LINE_SEPARATOR,
+				LINE_SEPARATOR);
+
+		System.out.printf("Lottery Name:\t\t%s\n", lotteryName);
+
+		System.out.printf("Total prize pool:\t$%,d\n", prizePoolMoney);
+
+		System.out.printf("Winning Numbers:\t%s\n\n",
+				A_P_ProjectMethods.formatTicketNumbers(winningNumbers));
+
+		int count = A_P_ProjectMethods.countMatchingNumbers(new int[] { 1, 2, 3, 4 },
+				new int[] { 2, 3, 4, 5 });
+
+		System.out.println(count);
+
+		input.close();
+	} // end main
 }
 // end class
