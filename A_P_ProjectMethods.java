@@ -3,6 +3,31 @@ import java.util.*;
 public class A_P_ProjectMethods
 {
 
+	/*
+	 * Set up variables to store the title and description of the lottery
+	 * application.
+	 *
+	 * Print the title and description to the console.
+	 */
+	final static  String APP_NAME = "AARON'S LOTTERY PRIZE ANALYZER";
+
+	final  static String LOTTERY_DESCRIPTION = "Remember, it's not about winning. "
+			+ "It's about the thrill of almost winning!";
+
+	final static  String LINE_SEPARATOR = "*************************************************"
+			+ "******************************************"
+			+ "******************************************";
+
+
+	public static void printAppDescription() {
+		System.out.println(LINE_SEPARATOR + "\n");
+		System.out.println(APP_NAME);
+		System.out.println(LOTTERY_DESCRIPTION + "\n");
+		System.out.println(LINE_SEPARATOR + "\n");
+	}
+
+
+
 	/**
 	 * @param fileScnr - The instance of the scanner object that is used to read the
 	 *                 lottery .csv file.
@@ -19,7 +44,7 @@ public class A_P_ProjectMethods
 		int[] series = new int[split.length];
 		for (int i = 0; i < split.length; i++)
 		{
-			series[i] = Integer.parseInt(split[i]);
+			series[i] = Integer.parseInt(split[i].trim());
 		}
 
 		// return the int array

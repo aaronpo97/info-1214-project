@@ -25,30 +25,13 @@ public class A_P_LotteryPrizes
 		 */
 		Scanner input = new Scanner(System.in);
 
-		/*
-		 * Set up variables to store the title and description of the lottery
-		 * application.
-		 *
-		 * Print the title and description to the console.
-		 */
-		final String APP_NAME = "AARON'S LOTTERY PRIZE ANALYZER";
-
-		final String LOTTERY_DESCRIPTION = "Remember, it's not about winning. "
-				+ "It's about the thrill of almost winning!";
-
-		final String LINE_SEPARATOR = "*************************************************"
-				+ "******************************************"
-				+ "******************************************";
-
-		System.out.printf("%s\n\n%s\n%s\n\n%s\n\n", LINE_SEPARATOR, APP_NAME,
-				LOTTERY_DESCRIPTION, LINE_SEPARATOR);
-
 		String tempString;
 		int tempInt;
 		String lotteryName;
 		int prizePoolMoney;
 
-		int numTickets = 0;
+		// print out app description:
+		A_P_ProjectMethods.printAppDescription();
 
 		while (true)
 		{
@@ -67,11 +50,11 @@ public class A_P_LotteryPrizes
 				System.out.println(
 						"\tThe name of the lottery must be 5 characters or more.");
 				continue;
-			}
+			} // end if
 
 			lotteryName = tempString;
 			break;
-		}
+		} // end while
 
 		while (true)
 		{
@@ -93,7 +76,7 @@ public class A_P_LotteryPrizes
 				System.out.printf("\tYou entered %s. Please enter a valid number.\n",
 						tempString);
 				continue;
-			}
+			} // end if
 
 			tempInt = input.nextInt();
 			// flush the input buffer
@@ -103,33 +86,33 @@ public class A_P_LotteryPrizes
 			{
 				System.out.println("\tThe prize pool must be at least $1000.");
 				continue;
-			}
+			} // end if
 
 			prizePoolMoney = tempInt;
 			break;
-		}
+		} // end while
 
-		/**
+		/*
 		 * Prompt the user to enter the name of the data file.
 		 */
 		String fileName;
 
 		System.out.print("Please enter the path for the data file: ");
 		fileName = input.nextLine();
-		File file = new File(fileName);
 
 		Scanner fileInput = null;
 		try
 		{
-
+			File file = new File(fileName);
 			fileInput = new Scanner(file);
 		}
 		catch (FileNotFoundException e)
 		{
-			System.out.printf("The file %s does not exist.\n", fileName);
-			e.printStackTrace();
-			System.exit(0);
-		}
+			System.out.printf("The file %s does not exist. Exiting now.\n",
+					fileName);
+			// e.printStackTrace();
+			System.exit(1);
+		} // end try catch
 
 		/*
 		 * Using the getNextSeries method from A_P_ProjectMethods, get the winning
@@ -138,28 +121,129 @@ public class A_P_LotteryPrizes
 		int[] winningNumbers = A_P_ProjectMethods.getNextSeries(fileInput);
 
 		/*
+		 * Create constants for the percentage of the prize pool each are prize tier
+		 * is awarded.
+		 *
+		 * First place: 85% of prize pool Second place: 7% of prize pool Third place:
+		 * 8% of prize pool
+		 */
+		final double FIRST_PLACE_PRIZE_ALLOC_PERCENT = 0.85;
+		final double SECOND_PLACE_PRIZE_ALLOC_PERCENT = 0.07;
+		final double THIRD_PLACE_PRIZE_ALLOC_PERCENT = 0.08;
+
+		/*
+		 * Calculate the prize money for each prize tier.
+		 */
+		final double FIRST_PLACE_PRIZE = prizePoolMoney
+				* FIRST_PLACE_PRIZE_ALLOC_PERCENT;
+		final double SECOND_PLACE_PRIZE = prizePoolMoney
+				* SECOND_PLACE_PRIZE_ALLOC_PERCENT;
+		final double THIRD_PLACE_PRIZE = prizePoolMoney
+				* THIRD_PLACE_PRIZE_ALLOC_PERCENT;
+
+		/*
 		 * Create the report for the lottery prize.
 		 *
 		 * Print the lottery name, total prize pool, and winning numbers to the
 		 * console.
 		 */
 
-		System.out.printf("\n%s\n\nLottery Prize Report\n\n%s\n\n", LINE_SEPARATOR,
-				LINE_SEPARATOR);
+		System.out.println("\n" + A_P_ProjectMethods.LINE_SEPARATOR + "\n");
+		System.out.println("Lottery Prize Report\n");
+		System.out.println(A_P_ProjectMethods.LINE_SEPARATOR + "\n");
 
-		System.out.printf("Lottery Name:\t\t%s\n", lotteryName);
+		System.out.println("Lottery Name:\t\t" + lotteryName);
 
-		System.out.printf("Total prize pool:\t$%,d\n", prizePoolMoney);
+		System.out.println(
+				"Total prize pool:\t$" + String.format("%,d", prizePoolMoney));
 
-		System.out.printf("Winning Numbers:\t%s\n\n",
-				A_P_ProjectMethods.formatTicketNumbers(winningNumbers));
+		System.out.println("Winning Numbers:\t"
+				+ A_P_ProjectMethods.formatTicketNumbers(winningNumbers) + "\n");
 
-		int count = A_P_ProjectMethods.countMatchingNumbers(new int[] { 1, 2, 3, 4 },
-				new int[] { 2, 3, 4, 5 });
+		// create a running total for the number of first place winners
+		int firstPlaceWinnersCount = 0;
+		// create an array list to store the second place and third place winners
+		ArrayList<int[]> secondPlaceWinners = new ArrayList<>(); // 5 numbers match
+		ArrayList<int[]> thirdPlaceWinners = new ArrayList<>(); // 4 numbers match
 
-		System.out.println(count);
+		/*
+		 * Create container variables to store the parsed nextSeries and the lottery
+		 * match count.
+		 */
+		int[] nextSeries;
+		int matchCount;
+
+		/*
+		 * Create constants for the number of matches needed to win each prize tier.
+		 */
+		final int MATCHES_NEEDED_FOR_FIRST_PLACE = winningNumbers.length;
+		final int MATCHES_NEEDED_FOR_SECOND_PLACE = MATCHES_NEEDED_FOR_FIRST_PLACE
+				- 1;
+		final int MATCHES_NEEDED_FOR_THIRD_PLACE = MATCHES_NEEDED_FOR_FIRST_PLACE
+				- 2;
+		/*
+		 * Create a loop that will continue iterating as long as there is a next line
+		 * in the file.
+		 */
+		while (fileInput.hasNextLine())
+		{
+			/*
+			 * Use the methods getNextSeries and countMatchingNumbers
+			 */
+			nextSeries = A_P_ProjectMethods.getNextSeries(fileInput);
+			matchCount = A_P_ProjectMethods.countMatchingNumbers(nextSeries,
+					winningNumbers);
+
+			if (matchCount == MATCHES_NEEDED_FOR_FIRST_PLACE)
+			{
+				firstPlaceWinnersCount += 1;
+				continue;
+			}
+			if (matchCount == MATCHES_NEEDED_FOR_SECOND_PLACE)
+			{
+				secondPlaceWinners.add(nextSeries);
+				continue;
+			}
+			if (matchCount == MATCHES_NEEDED_FOR_THIRD_PLACE)
+			{
+				thirdPlaceWinners.add(nextSeries);
+			}
+		} // end while
+
+		/*
+		 * Print the number of winners for each prize tier and the winning ticket
+		 * numbers.
+		 */
+
+		// GRAND PRIZE WINNERS
+		System.out.printf("Grand prize winners: (all %d numbers match)\n",
+				MATCHES_NEEDED_FOR_FIRST_PLACE);
+		System.out.printf("Number of winners: %d\n", firstPlaceWinnersCount);
+
+		// SECOND PLACE WINNERS
+		System.out.printf("Second place winners: (%d of %d match)\n",
+				MATCHES_NEEDED_FOR_SECOND_PLACE, MATCHES_NEEDED_FOR_FIRST_PLACE);
+		System.out.printf("Number of winners: %d\n", secondPlaceWinners.size());
+
+		String temp;
+		for (int[] winner : secondPlaceWinners)
+		{
+			temp = A_P_ProjectMethods.formatTicketNumbers(winner);
+			System.out.println(temp);
+		}
+
+		// THIRD PLACE WINNERS
+		System.out.printf("Third place winners: (%d of %d match)\n",
+				MATCHES_NEEDED_FOR_THIRD_PLACE, MATCHES_NEEDED_FOR_FIRST_PLACE);
+		System.out.printf("Number of winners: %d\n", thirdPlaceWinners.size());
+		for (int[] winner : thirdPlaceWinners)
+		{
+			temp = A_P_ProjectMethods.formatTicketNumbers(winner);
+			System.out.println(temp);
+		}
 
 		input.close();
 	} // end main
+
 }
 // end class
