@@ -210,37 +210,56 @@ public class A_P_LotteryPrizes
 			}
 		} // end while
 
+		double FIRST_PLACE_PRIZE_PER_TICKET = FIRST_PLACE_PRIZE /firstPlaceWinnersCount;
+		double SECOND_PLACE_PRIZE_PER_TICKET = SECOND_PLACE_PRIZE / secondPlaceWinners.size();
+		double THIRD_PLACE_PRIZE_PER_TICKET = THIRD_PLACE_PRIZE / thirdPlaceWinners.size();
+
 		/*
 		 * Print the number of winners for each prize tier and the winning ticket
 		 * numbers.
 		 */
 
 		// GRAND PRIZE WINNERS
-		System.out.printf("Grand prize winners: (all %d numbers match)\n",
+		System.out.println(A_P_ProjectMethods.LINE_SEPARATOR);
+		System.out.printf("\nGrand prize winners: (all %d numbers match)\n",
 				MATCHES_NEEDED_FOR_FIRST_PLACE);
-		System.out.printf("Number of winners: %d\n", firstPlaceWinnersCount);
+		System.out.printf("\nNumber of winners: %d\n", firstPlaceWinnersCount);
+		System.out.printf("Percent of prize pool: %.2f%%\n", FIRST_PLACE_PRIZE_ALLOC_PERCENT * 100.0);
+		System.out.printf("Total prize value: $%,.2f\n", FIRST_PLACE_PRIZE);
+		System.out.printf("Prize per ticket: $%,.2f\n\n", FIRST_PLACE_PRIZE_PER_TICKET);
+
+
 
 		// SECOND PLACE WINNERS
-		System.out.printf("Second place winners: (%d of %d match)\n",
+		System.out.println(A_P_ProjectMethods.LINE_SEPARATOR);
+		System.out.printf("\nSecond place winners: (%d of %d match)\n",
 				MATCHES_NEEDED_FOR_SECOND_PLACE, MATCHES_NEEDED_FOR_FIRST_PLACE);
-		System.out.printf("Number of winners: %d\n", secondPlaceWinners.size());
-
+		System.out.printf("\nNumber of winners: %d\n", secondPlaceWinners.size());
+		System.out.printf("Percent of prize pool: %.2f%%\n", SECOND_PLACE_PRIZE_ALLOC_PERCENT * 100.0);
+		System.out.printf("Total prize value: $%,.2f\n", SECOND_PLACE_PRIZE);
+		System.out.printf("Prize per ticket: $%,.2f\n\n", SECOND_PLACE_PRIZE_PER_TICKET);
 		String temp;
 		for (int[] winner : secondPlaceWinners)
 		{
 			temp = A_P_ProjectMethods.formatTicketNumbers(winner);
 			System.out.println(temp);
 		}
-
+		System.out.println();
 		// THIRD PLACE WINNERS
-		System.out.printf("Third place winners: (%d of %d match)\n",
+
+		System.out.println(A_P_ProjectMethods.LINE_SEPARATOR);
+		System.out.printf("\nThird place winners: (%d of %d match)",
 				MATCHES_NEEDED_FOR_THIRD_PLACE, MATCHES_NEEDED_FOR_FIRST_PLACE);
-		System.out.printf("Number of winners: %d\n", thirdPlaceWinners.size());
+		System.out.printf("\nNumber of winners: %d\n", thirdPlaceWinners.size());
+		System.out.printf("Percent of prize pool: %.2f%%\n", THIRD_PLACE_PRIZE_ALLOC_PERCENT * 100.0);
+		System.out.printf("Total prize value: $%,.2f\n", THIRD_PLACE_PRIZE);
+		System.out.printf("Prize per ticket: $%,.2f\n\n", THIRD_PLACE_PRIZE_PER_TICKET);
 		for (int[] winner : thirdPlaceWinners)
 		{
 			temp = A_P_ProjectMethods.formatTicketNumbers(winner);
 			System.out.println(temp);
 		}
+System.out.println();
 
 		input.close();
 	} // end main
