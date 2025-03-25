@@ -18,7 +18,8 @@ import java.io.*;
 public class A_P_LotteryPrizes
 
 {
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		/*
 		 * Set up a Scanner object to read input from the console.
 		 */
@@ -32,7 +33,8 @@ public class A_P_LotteryPrizes
 		// print out app description:
 		A_P_ProjectMethods.printAppDescription();
 
-		while (true) {
+		while (true)
+		{
 			/*
 			 * Prompt the user to enter the name of the lottery.
 			 *
@@ -43,7 +45,8 @@ public class A_P_LotteryPrizes
 			System.out.print("Please enter the name of the lottery: ");
 			tempString = input.nextLine();
 
-			if (tempString.length() < 5) {
+			if (tempString.length() < 5)
+			{
 				System.out.println(
 						"\tThe name of the lottery must be 5 characters or more.");
 				continue;
@@ -53,7 +56,8 @@ public class A_P_LotteryPrizes
 			break;
 		} // end while
 
-		while (true) {
+		while (true)
+		{
 			/*
 			 * Prompt the user to enter the amount of money in the prize pool.
 			 *
@@ -66,7 +70,8 @@ public class A_P_LotteryPrizes
 			System.out.print(
 					"Please enter the amount of money in the prize pool (no cents): $");
 
-			if (!input.hasNextInt()) {
+			if (!input.hasNextInt())
+			{
 				tempString = input.nextLine();
 				System.out.printf("\tYou entered %s. Please enter a valid number.\n",
 						tempString);
@@ -77,7 +82,8 @@ public class A_P_LotteryPrizes
 			// flush the input buffer
 			input.nextLine();
 
-			if (tempInt < 1000) {
+			if (tempInt < 1000)
+			{
 				System.out.println("\tThe prize pool must be at least $1000.");
 				continue;
 			} // end if
@@ -95,12 +101,14 @@ public class A_P_LotteryPrizes
 		fileName = input.nextLine();
 
 		Scanner fileInput = null;
-		try {
+		try
+		{
 			File file = new File(fileName);
 			fileInput = new Scanner(file);
-		} catch (FileNotFoundException e) {
-			System.out.printf("The file %s does not exist. Exiting now.\n",
-					fileName);
+		}
+		catch (FileNotFoundException e)
+		{
+			System.out.printf("The file %s does not exist. Exiting now.\n", fileName);
 			// e.printStackTrace();
 			System.exit(1);
 		} // end try catch
@@ -118,19 +126,16 @@ public class A_P_LotteryPrizes
 		 * First place: 85% of prize pool Second place: 7% of prize pool Third place:
 		 * 8% of prize pool
 		 */
-		final double FIRST_PLACE_PRIZE_ALLOC_PERCENT = 0.85;
-		final double SECOND_PLACE_PRIZE_ALLOC_PERCENT = 0.07;
-		final double THIRD_PLACE_PRIZE_ALLOC_PERCENT = 0.08;
+		final double FIRST_PLACE_ALLOCATION = 0.85;
+		final double SECOND_PLACE_ALLOCATION = 0.07;
+		final double THIRD_PLACE_ALLOCATION = 0.08;
 
 		/*
 		 * Calculate the prize money for each prize tier.
 		 */
-		final double FIRST_PLACE_PRIZE = prizePoolMoney
-				* FIRST_PLACE_PRIZE_ALLOC_PERCENT;
-		final double SECOND_PLACE_PRIZE = prizePoolMoney
-				* SECOND_PLACE_PRIZE_ALLOC_PERCENT;
-		final double THIRD_PLACE_PRIZE = prizePoolMoney
-				* THIRD_PLACE_PRIZE_ALLOC_PERCENT;
+		final double FIRST_PLACE_AMOUNT = prizePoolMoney * FIRST_PLACE_ALLOCATION;
+		final double SECOND_PLACE_AMOUNT = prizePoolMoney * SECOND_PLACE_ALLOCATION;
+		final double THIRD_PLACE_AMOUNT = prizePoolMoney * THIRD_PLACE_ALLOCATION;
 
 		/*
 		 * Create the report for the lottery prize.
@@ -147,8 +152,9 @@ public class A_P_LotteryPrizes
 		System.out.println(
 				"Total prize pool:\t$" + String.format("%,d", prizePoolMoney));
 
-		System.out.println("Winning Numbers:\t"
-				+ A_P_ProjectMethods.formatTicketNumbers(winningNumbers) + "\n");
+		System.out.println(
+				"Winning Numbers:\t" + A_P_ProjectMethods.formatTicketNumbers(winningNumbers)
+						+ "\n");
 
 		// create a running total for the number of first place winners
 		int firstPlaceWinnersCount = 0;
@@ -167,15 +173,14 @@ public class A_P_LotteryPrizes
 		 * Create constants for the number of matches needed to win each prize tier.
 		 */
 		final int MATCHES_NEEDED_FOR_FIRST_PLACE = winningNumbers.length;
-		final int MATCHES_NEEDED_FOR_SECOND_PLACE = MATCHES_NEEDED_FOR_FIRST_PLACE
-				- 1;
-		final int MATCHES_NEEDED_FOR_THIRD_PLACE = MATCHES_NEEDED_FOR_FIRST_PLACE
-				- 2;
+		final int MATCHES_NEEDED_FOR_SECOND_PLACE = MATCHES_NEEDED_FOR_FIRST_PLACE - 1;
+		final int MATCHES_NEEDED_FOR_THIRD_PLACE = MATCHES_NEEDED_FOR_FIRST_PLACE - 2;
 		/*
 		 * Create a loop that will continue iterating as long as there is a next line
 		 * in the file.
 		 */
-		while (fileInput.hasNextLine()) {
+		while (fileInput.hasNextLine())
+		{
 			/*
 			 * Use the methods getNextSeries and countMatchingNumbers
 			 */
@@ -183,22 +188,26 @@ public class A_P_LotteryPrizes
 			matchCount = A_P_ProjectMethods.countMatchingNumbers(nextSeries,
 					winningNumbers);
 
-			if (matchCount == MATCHES_NEEDED_FOR_FIRST_PLACE) {
+			if (matchCount == MATCHES_NEEDED_FOR_FIRST_PLACE)
+			{
 				firstPlaceWinnersCount += 1;
-				continue;
 			}
-			if (matchCount == MATCHES_NEEDED_FOR_SECOND_PLACE) {
+			else if (matchCount == MATCHES_NEEDED_FOR_SECOND_PLACE)
+			{
 				secondPlaceWinners.add(nextSeries);
-				continue;
 			}
-			if (matchCount == MATCHES_NEEDED_FOR_THIRD_PLACE) {
+			else if (matchCount == MATCHES_NEEDED_FOR_THIRD_PLACE)
+			{
 				thirdPlaceWinners.add(nextSeries);
 			}
 		} // end while
 
-		double FIRST_PLACE_PRIZE_PER_TICKET = FIRST_PLACE_PRIZE / firstPlaceWinnersCount;
-		double SECOND_PLACE_PRIZE_PER_TICKET = SECOND_PLACE_PRIZE / secondPlaceWinners.size();
-		double THIRD_PLACE_PRIZE_PER_TICKET = THIRD_PLACE_PRIZE / thirdPlaceWinners.size();
+		double FIRST_PLACE_PRIZE_PER_TICKET =
+				FIRST_PLACE_AMOUNT / firstPlaceWinnersCount;
+		double SECOND_PLACE_PRIZE_PER_TICKET =
+				SECOND_PLACE_AMOUNT / secondPlaceWinners.size();
+		double THIRD_PLACE_PRIZE_PER_TICKET =
+				THIRD_PLACE_AMOUNT / thirdPlaceWinners.size();
 
 		/*
 		 * Print the number of winners for each prize tier and the winning ticket
@@ -206,18 +215,16 @@ public class A_P_LotteryPrizes
 		 */
 
 		// GRAND PRIZE WINNERS
-		A_P_ProjectMethods.printTierStats(firstPlaceWinnersCount, FIRST_PLACE_PRIZE_ALLOC_PERCENT,
-				FIRST_PLACE_PRIZE,
-				FIRST_PLACE_PRIZE_PER_TICKET);
+		A_P_ProjectMethods.printTierStats(firstPlaceWinnersCount, FIRST_PLACE_ALLOCATION,
+				FIRST_PLACE_AMOUNT, FIRST_PLACE_PRIZE_PER_TICKET);
 
 		// SECOND PLACE WINNERS
 		System.out.println(A_P_ProjectMethods.LINE_SEPARATOR);
 		System.out.printf("\nSecond place winners:\t(%d of %d match)\n",
 				MATCHES_NEEDED_FOR_SECOND_PLACE, MATCHES_NEEDED_FOR_FIRST_PLACE);
 
-		A_P_ProjectMethods.printTierStats(secondPlaceWinners.size(), SECOND_PLACE_PRIZE_ALLOC_PERCENT,
-				SECOND_PLACE_PRIZE,
-				SECOND_PLACE_PRIZE_PER_TICKET);
+		A_P_ProjectMethods.printTierStats(secondPlaceWinners.size(),
+				SECOND_PLACE_ALLOCATION, SECOND_PLACE_AMOUNT, SECOND_PLACE_PRIZE_PER_TICKET);
 
 		A_P_ProjectMethods.listWinners(secondPlaceWinners);
 
@@ -228,17 +235,14 @@ public class A_P_LotteryPrizes
 		System.out.printf("\nThird place winners:\t(%d of %d match)\n",
 				MATCHES_NEEDED_FOR_THIRD_PLACE, MATCHES_NEEDED_FOR_FIRST_PLACE);
 
-		A_P_ProjectMethods.printTierStats(thirdPlaceWinners.size(), THIRD_PLACE_PRIZE_ALLOC_PERCENT,
-				THIRD_PLACE_PRIZE,
-				THIRD_PLACE_PRIZE_PER_TICKET);
+		A_P_ProjectMethods.printTierStats(thirdPlaceWinners.size(),
+				THIRD_PLACE_ALLOCATION, THIRD_PLACE_AMOUNT, THIRD_PLACE_PRIZE_PER_TICKET);
 
 		A_P_ProjectMethods.listWinners(thirdPlaceWinners);
 
 		System.out.println();
 
-		/*
-		 * Housekeeping
-		 */
+		// Housekeeping
 		input.close();
 	} // end main
 

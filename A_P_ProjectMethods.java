@@ -1,6 +1,7 @@
 import java.util.*;
 
-public class A_P_ProjectMethods {
+public class A_P_ProjectMethods
+{
 
 	/*
 	 * Set up variables to store the title and description of the lottery
@@ -13,11 +14,13 @@ public class A_P_ProjectMethods {
 	final static String LOTTERY_DESCRIPTION = "Remember, it's not about winning. "
 			+ "It's about the thrill of almost winning!";
 
-	final static String LINE_SEPARATOR = "*************************************************"
-			+ "******************************************"
-			+ "******************************************";
+	final static String LINE_SEPARATOR =
+			"*************************************************"
+					+ "******************************************"
+					+ "******************************************";
 
-	public static void printAppDescription() {
+	public static void printAppDescription()
+	{
 		System.out.println(LINE_SEPARATOR + "\n");
 		System.out.println(APP_NAME);
 		System.out.println(LOTTERY_DESCRIPTION + "\n");
@@ -27,18 +30,19 @@ public class A_P_ProjectMethods {
 	/**
 	 * @param fileScnr - The instance of the scanner object that is used to read the
 	 *                 lottery .csv file.
-	 * @return An array that contains the numbers of the next series as read from
-	 *         the
-	 *         file.
+	 * @return An array that contains the numbers of the next series as read from the
+	 * file.
 	 */
-	public static int[] getNextSeries(Scanner fileScnr) {
+	public static int[] getNextSeries(Scanner fileScnr)
+	{
 		// read each line
 		String line = fileScnr.nextLine();
 		String[] split = line.split(",");
 
 		// convert the string array to an int array
 		int[] series = new int[split.length];
-		for (int i = 0; i < split.length; i++) {
+		for (int i = 0; i < split.length; i++)
+		{
 			series[i] = Integer.parseInt(split[i].trim());
 		}
 
@@ -53,7 +57,8 @@ public class A_P_ProjectMethods {
 	 * @param ticketNumbers - An array of length 6 that contains ticket numbers.
 	 * @return The formatted string.
 	 */
-	public static String formatTicketNumbers(int[] ticketNumbers) {
+	public static String formatTicketNumbers(int[] ticketNumbers)
+	{
 		/*
 		 * Create an empty string to store the formatted ticket numbers.
 		 *
@@ -63,7 +68,8 @@ public class A_P_ProjectMethods {
 		 */
 		StringBuilder formattedTicketNumbers = new StringBuilder();
 		boolean isLastIndex;
-		for (int i = 0; i < ticketNumbers.length; i++) {
+		for (int i = 0; i < ticketNumbers.length; i++)
+		{
 			isLastIndex = i == ticketNumbers.length - 1;
 			formattedTicketNumbers.append(ticketNumbers[i])
 					.append(isLastIndex ? "" : ", ");
@@ -74,16 +80,20 @@ public class A_P_ProjectMethods {
 	/**
 	 * @return The amount of matching numbers
 	 */
-	public static int countMatchingNumbers(int[] ticketNumbers, int[] winningNumbers) {
+	public static int countMatchingNumbers(int[] ticketNumbers, int[] winningNumbers)
+	{
 		// @todo Sanity check, ticket numbers and winning numbers should be the same
 		// length.
 
 		// Create a variable to store the count of matching numbers.
 		int matchingNumbersCount = 0;
 
-		for (int ticketNumber : ticketNumbers) {
-			for (int winningNumber : winningNumbers) {
-				if (ticketNumber == winningNumber) {
+		for (int ticketNumber : ticketNumbers)
+		{
+			for (int winningNumber : winningNumbers)
+			{
+				if (ticketNumber == winningNumber)
+				{
 					// if there is a match between this number and one of the winning numbers, stop
 					// this inner loop
 					matchingNumbersCount += 1;
@@ -95,11 +105,9 @@ public class A_P_ProjectMethods {
 		return matchingNumbersCount;
 	}
 
-	public static void printTierStats(
-			int numWinners,
-			double prizePoolPercent,
-			double totalPrizeValue,
-			double prizePerTicket) {
+	public static void printTierStats(int numWinners, double prizePoolPercent,
+			double totalPrizeValue, double prizePerTicket)
+	{
 
 		System.out.printf("\nNumber of winners:\t%d\n", numWinners);
 		System.out.printf("Percent of prize pool:\t%.2f%%\n", prizePoolPercent * 100.0);
@@ -108,16 +116,20 @@ public class A_P_ProjectMethods {
 
 	}
 
-	public static void listWinners(ArrayList<int[]> winners) {
+	public static void listWinners(ArrayList<int[]> winners)
+	{
 		String temp = "";
 		System.out.print("Ticket Numbers:\t");
-		for (int i = 0; i < winners.size(); i += 1) {
-			if (i == 0) {
+		for (int i = 0; i < winners.size(); i += 1)
+		{
+			if (i == 0)
+			{
 				// Print initial tab only for the first item.
 				System.out.print("\t");
 			}
 			// If it's an odd index, print an additional tab for alignment.
-			if (i % 2 != 0) {
+			if (i % 2 != 0)
+			{
 				System.out.print("\t");
 			}
 
@@ -126,7 +138,8 @@ public class A_P_ProjectMethods {
 			System.out.printf("%15s", temp);
 
 			// If it's an even index, add a tab after the ticket number for alignment.
-			if (i % 2 != 0) {
+			if (i % 2 != 0)
+			{
 				// Print a newline for odd index after each ticket number.
 				System.out.println();
 				System.out.print("\t\t\t");
