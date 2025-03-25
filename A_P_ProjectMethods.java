@@ -4,15 +4,19 @@ public class A_P_ProjectMethods
 {
 
 	/*
-	 * Set up variables to store the title and description of the lottery
-	 * application.
-	 *
-	 * Print the title and description to the console.
+	 * Set up variables to store the title and a set of descriptions for the app.
 	 */
 	final static String APP_NAME = "AARON'S LOTTERY PRIZE ANALYZER";
 
-	final static String LOTTERY_DESCRIPTION = "Remember, it's not about winning. "
-			+ "It's about the thrill of almost winning!";
+	final static String[] LOTTERY_DESCRIPTIONS =
+			{
+					"Remember, it's not about winning. It's about the thrill of almost winning!",
+					"99% of people quit gambling before their big win. Don't let it be you.",
+					"Gambling is the only way to get nothing for something.",
+					"WINNER! GAGNANT!",
+					"Gambling: As seen on Roblox!",
+					"Gambling: At least you're not doing it on CS:GO."
+			};
 
 	final static String LINE_SEPARATOR =
 			"*************************************************"
@@ -21,9 +25,13 @@ public class A_P_ProjectMethods
 
 	public static void printAppDescription()
 	{
+		// choose a random index out of LOTTERY_DESCRIPTIONS
+		int rand = (int) (Math.random() * (LOTTERY_DESCRIPTIONS.length));
+
 		System.out.println(LINE_SEPARATOR + "\n");
 		System.out.println(APP_NAME);
-		System.out.println(LOTTERY_DESCRIPTION + "\n");
+		// choose random description
+		System.out.println(LOTTERY_DESCRIPTIONS[rand] + "\n");
 		System.out.println(LINE_SEPARATOR + "\n");
 	}
 
@@ -109,10 +117,10 @@ public class A_P_ProjectMethods
 			double totalPrizeValue, double prizePerTicket)
 	{
 
-		System.out.printf("\nNumber of winners:\t%d\n", numWinners);
+		System.out.printf("\nNumber of winners:\t\t%d\n", numWinners);
 		System.out.printf("Percent of prize pool:\t%.2f%%\n", prizePoolPercent * 100.0);
-		System.out.printf("Total prize value:\t$%,.2f\n", totalPrizeValue);
-		System.out.printf("Prize per ticket:\t$%,.2f\n\n", prizePerTicket);
+		System.out.printf("Total prize value:\t\t$%,.2f\n", totalPrizeValue);
+		System.out.printf("Prize per ticket:\t\t$%,.2f\n\n", prizePerTicket);
 
 	}
 
@@ -125,7 +133,7 @@ public class A_P_ProjectMethods
 			if (i == 0)
 			{
 				// Print initial tab only for the first item.
-				System.out.print("\t");
+				System.out.print("\t\t");
 			}
 			// If it's an odd index, print an additional tab for alignment.
 			if (i % 2 != 0)
@@ -135,14 +143,14 @@ public class A_P_ProjectMethods
 
 			// Format the ticket number for the winner.
 			temp = A_P_ProjectMethods.formatTicketNumbers(winners.get(i));
-			System.out.printf("%15s", temp);
+			System.out.printf("%-30s", temp);
 
 			// If it's an even index, add a tab after the ticket number for alignment.
 			if (i % 2 != 0)
 			{
 				// Print a newline for odd index after each ticket number.
 				System.out.println();
-				System.out.print("\t\t\t");
+				System.out.print("\t\t\t\t\t\t");
 			}
 		}
 	}
