@@ -23,26 +23,41 @@ public class A_P_LotteryPrizes
 		// Setup the scanner object
 		Scanner input = new Scanner(System.in);
 
+		/*
+		 * Set up variables to store the title and a set of descriptions for the app.
+		 */
+		final String APP_NAME = "AARON'S LOTTERY PRIZE ANALYZER";
+
+		final String[] LOTTERY_DESCRIPTIONS = {
+				"Remember, it's not about winning. It's about the thrill of almost winning!",
+				"99% of people quit gambling before their big win. Don't let it be you.",
+				"Gambling is the only way to get nothing for something.",
+				"WINNER! GAGNANT!",
+				"Gambling: As seen on Roblox!",
+				"Gambling: At least you're not doing it on CS:GO.",
+
+		};
+
+		final String LINE_SEPARATOR = "*************************************************"
+				+ "******************************************"
+				+ "******************************************";
+
 		// Create container variables for user input
 		String lotteryName;
 		int prizePoolMoney;
 
 		// print out app description:
-		A_P_ProjectMethods.printAppDescription();
+		A_P_ProjectMethods.printAppDescription(APP_NAME, LOTTERY_DESCRIPTIONS,
+				LINE_SEPARATOR);
 
 		// Create temp variables to store unsanitized user input
 		String tempString;
 		int tempInt;
 
+		// Validation loop for lottery name:
 		while (true)
 		{
-			/*
-			 * Prompt the user to enter the name of the lottery.
-			 *
-			 * If the name is less than 5 characters, prompt the user to enter a name
-			 * that is 5 characters or more.
-			 */
-
+			// Prompt the user for the lottery name, store value in tempString.
 			System.out.print("Please enter the name of the lottery: ");
 			tempString = input.nextLine();
 
@@ -54,6 +69,7 @@ public class A_P_LotteryPrizes
 				continue;
 			} // end if
 
+			// If the tempString is validated, then store it in lotteryName.
 			lotteryName = tempString;
 			break;
 		} // end while
@@ -177,10 +193,9 @@ public class A_P_LotteryPrizes
 		 */
 		while (fileInput.hasNextLine())
 		{
-			/*
-			 * Use the methods getNextSeries and countMatchingNumbers
-			 */
+			// Get the next line of lottery numbers using .getNextSeries()
 			nextSeries = A_P_ProjectMethods.getNextSeries(fileInput);
+			// Compare the nextSeries array with the winning numbers array by calculating match count
 			matchCount = A_P_ProjectMethods.countMatchingNumbers(nextSeries,
 					winningNumbers);
 
@@ -199,16 +214,12 @@ public class A_P_LotteryPrizes
 		} // end while
 
 		/* --------------------------------------------------------------------------- */
-
-		// PROCESSING: Calculate the prize allocation for each ticket in each tier.
-
+		/* PROCESSING: Calculate the prize allocation for each ticket in each tier.		 */
 		/* --------------------------------------------------------------------------- */
 
 		double firstPrizePerTicket = FIRST_PLACE_AMOUNT / firstPlaceWinnersCount;
 		double secondPrizePerTicket = SECOND_PLACE_AMOUNT / secondPlaceWinners.size();
 		double thirdPrizePerTicket = THIRD_PLACE_AMOUNT / thirdPlaceWinners.size();
-
-		/* --------------------------------------------------------------------------- */
 
 		/* --------------------------------------------------------------------------- */
 		/*                               REPORT                                        */
@@ -222,24 +233,27 @@ public class A_P_LotteryPrizes
 		/*      and the winning ticket numbers.                                        */
 		/* --------------------------------------------------------------------------- */
 
-		System.out.println("\n" + A_P_ProjectMethods.LINE_SEPARATOR + "\n");
+		System.out.println("\n" + LINE_SEPARATOR + "\n");
 		System.out.println("Lottery Prize Report\n");
-		System.out.println(A_P_ProjectMethods.LINE_SEPARATOR + "\n");
+		System.out.println(LINE_SEPARATOR + "\n");
 		System.out.println("Lottery Name:\t\t\t" + lotteryName);
 
 		System.out.println(
 				"Total prize pool:\t\t$" + String.format("%,d", prizePoolMoney));
 
 		System.out.println(
-				"Winning Numbers:\t" + A_P_ProjectMethods.formatTicketNumbers(winningNumbers)
-					);
+				"Winning Numbers:\t\t" + A_P_ProjectMethods.formatTicketNumbers(
+						winningNumbers));
 
 		System.out.print("\n");
+		System.out.println(LINE_SEPARATOR);
+
+		/* --------------------------------------------------------------------------- */
+		/* FIRST PLACE  																															 */
+		/* - Print out the stats for the second place winners.												 */
+		/* - Iterate through the ArrayList of secondPlaceWinners.											 */
 		/* --------------------------------------------------------------------------- */
 
-		System.out.println(A_P_ProjectMethods.LINE_SEPARATOR);
-
-		// GRAND PRIZE WINNERS
 		System.out.printf("\nFirst place winners:\t(%d of %d match)\n",
 				MATCHES_NEEDED_FOR_FIRST_PLACE, MATCHES_NEEDED_FOR_FIRST_PLACE);
 
@@ -248,10 +262,14 @@ public class A_P_LotteryPrizes
 		A_P_ProjectMethods.printTierStats(firstPlaceWinnersCount, FIRST_PLACE_ALLOCATION,
 				FIRST_PLACE_AMOUNT, firstPrizePerTicket);
 
+		System.out.println(LINE_SEPARATOR);
+
+		/* --------------------------------------------------------------------------- */
+		/* SECOND PLACE 																															 */
+		/* - Print out the stats for the second place winners.												 */
+		/* - Iterate through the ArrayList of secondPlaceWinners.											 */
 		/* --------------------------------------------------------------------------- */
 
-		// SECOND PLACE WINNERS
-		System.out.println(A_P_ProjectMethods.LINE_SEPARATOR);
 		System.out.printf("\nSecond place winners:\t(%d of %d match)\n",
 				MATCHES_NEEDED_FOR_SECOND_PLACE, MATCHES_NEEDED_FOR_FIRST_PLACE);
 
@@ -265,9 +283,12 @@ public class A_P_LotteryPrizes
 		System.out.println();
 
 		/* --------------------------------------------------------------------------- */
+		/* THIRD PLACE  																															 */
+		/* - Print out the stats for the second place winners.												 */
+		/* - Iterate through the ArrayList of secondPlaceWinners.											 */
+		/* --------------------------------------------------------------------------- */
 
-		// THIRD PLACE WINNERS
-		System.out.println(A_P_ProjectMethods.LINE_SEPARATOR);
+		System.out.println(LINE_SEPARATOR);
 		System.out.printf("\nThird place winners:\t(%d of %d match)\n",
 				MATCHES_NEEDED_FOR_THIRD_PLACE, MATCHES_NEEDED_FOR_FIRST_PLACE);
 
