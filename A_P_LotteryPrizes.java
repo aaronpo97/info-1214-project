@@ -252,7 +252,7 @@ public class A_P_LotteryPrizes
 		/* - Iterate through the ArrayList of secondPlaceWinners.											 */
 		/* --------------------------------------------------------------------------- */
 
-		System.out.printf("\nFirst place winners:\t(%d of %d match)\n",
+		System.out.printf("\nFirst place winners:\t\t(%d of %d match)\n",
 				MATCHES_NEEDED_FOR_FIRST_PLACE, MATCHES_NEEDED_FOR_FIRST_PLACE);
 
 		System.out.println("\nWINNER! GAGNANT!");
@@ -268,7 +268,7 @@ public class A_P_LotteryPrizes
 		/* - Iterate through the ArrayList of secondPlaceWinners.											 */
 		/* --------------------------------------------------------------------------- */
 
-		System.out.printf("\nSecond place winners:\t(%d of %d match)\n",
+		System.out.printf("\nSecond place winners:\t\t(%d of %d match)\n",
 				MATCHES_NEEDED_FOR_SECOND_PLACE, MATCHES_NEEDED_FOR_FIRST_PLACE);
 
 		// Print out the stats for second place winners:
@@ -287,7 +287,7 @@ public class A_P_LotteryPrizes
 		/* --------------------------------------------------------------------------- */
 
 		System.out.println(LINE_SEPARATOR);
-		System.out.printf("\nThird place winners:\t(%d of %d match)\n",
+		System.out.printf("\nThird place winners:\t\t(%d of %d match)\n",
 				MATCHES_NEEDED_FOR_THIRD_PLACE, MATCHES_NEEDED_FOR_FIRST_PLACE);
 
 		// Print out the stats for third place winners:

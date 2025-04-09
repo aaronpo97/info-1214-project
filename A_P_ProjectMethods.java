@@ -183,7 +183,7 @@ public class A_P_ProjectMethods
 			double totalPrizeValue, double prizePerTicket)
 	{
 		System.out.printf("\nNumber of winners:\t\t%d\n", numWinners);
-		System.out.printf("Percent of prize pool:\t%.2f%%\n", prizePoolPercent * 100.0);
+		System.out.printf("Percent of prize pool:\t\t%.2f%%\n", prizePoolPercent * 100.0);
 		System.out.printf("Total prize value:\t\t$%,.2f\n", totalPrizeValue);
 		System.out.printf("Prize per ticket:\t\t$%,.2f\n\n", prizePerTicket);
 	} // END METHOD
@@ -226,7 +226,7 @@ public class A_P_ProjectMethods
 			if (i % 2 != 0)
 			{
 				System.out.println();
-				System.out.print("\t\t\t\t\t\t");
+				System.out.print("\t\t\t\t");
 			} // END IF
 		} // END FOR LOOP
 	}// END METHOD
