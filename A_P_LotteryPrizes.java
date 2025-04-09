@@ -38,7 +38,6 @@ public class A_P_LotteryPrizes
 				}; // end array
 
 		final String LINE_SEPARATOR = "*************************************************"
-				+ "******************************************"
 				+ "******************************************";
 
 		// Create container variables for user input
