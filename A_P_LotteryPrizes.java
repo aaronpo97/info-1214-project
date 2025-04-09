@@ -16,7 +16,6 @@ import java.util.*;
 import java.io.*;
 
 public class A_P_LotteryPrizes
-
 {
 	public static void main(String[] args)
 	{
@@ -28,15 +27,15 @@ public class A_P_LotteryPrizes
 		 */
 		final String APP_NAME = "AARON'S LOTTERY PRIZE ANALYZER";
 
-		final String[] LOTTERY_DESCRIPTIONS = {
-				"Remember, it's not about winning. It's about the thrill of almost winning!",
-				"99% of people quit gambling before their big win. Don't let it be you.",
-				"Gambling is the only way to get nothing for something.",
-				"WINNER! GAGNANT!",
-				"Gambling: As seen on Roblox!",
-				"Gambling: At least you're not doing it on CS:GO.",
-
-		};
+		final String[] LOTTERY_DESCRIPTIONS =
+				{
+					"Remember, it's not about winning. It's about the thrill of almost winning!",
+					"99% of people quit gambling before their big win. Don't let it be you.",
+					"Gambling is the only way to get nothing for something.",
+					"WINNER! GAGNANT!",
+					"Gambling: As seen on Roblox!",
+					"Gambling: At least you're not doing it on CS:GO.",
+				}; // end array
 
 		final String LINE_SEPARATOR = "*************************************************"
 				+ "******************************************"

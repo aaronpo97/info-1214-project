@@ -1,3 +1,10 @@
+/**
+ * Program Name: A_P_ProjectMethods.java
+ * Purpose: A helper class consisting of static methods for use in A_P_LotteryPrizes.java
+ * Date: 09-April-2025
+ * Name: Aaron Po
+ */
+
 import java.util.*;
 
 public class A_P_ProjectMethods
@@ -5,6 +12,14 @@ public class A_P_ProjectMethods
 	/* ----------------------------------------------------------------------------- */
 	/* ----------------------------------------------------------------------------- */
 
+	/**
+	 * Method Name: printAppDescription() <br>
+	 * Purpose: This method prints the app name, and a random description. <br>
+	 * Accepts: The app name, an array of random lottery descriptions, and a line separator string. <br>
+	 * Returns: N/A <br>
+	 * Coder: Aaron Po <br>
+	 * Date: 09-April-2025 <br>
+	 */
 	public static void printAppDescription(final String APP_NAME,
 			final String[] LOTTERY_DESCRIPTIONS, final String LINE_SEPARATOR)
 	{
@@ -16,80 +31,120 @@ public class A_P_ProjectMethods
 		// choose random description
 		System.out.println(LOTTERY_DESCRIPTIONS[rand] + "\n");
 		System.out.println(LINE_SEPARATOR + "\n");
-	}
+	} // END METHOD
 
 	/* ----------------------------------------------------------------------------- */
 	/* ----------------------------------------------------------------------------- */
 
 	/**
-	 * @param fileScnr - The instance of the scanner object that is used to read the
-	 *                 lottery .csv file.
-	 * @return An array that contains the numbers of the next series as read from the
-	 * file.
+	 * Method Name: getNextSeries() <br>
+	 * Purpose: This method takes a Scanner object and gets each series in the list
+	 * Accepts: A Scanner object to read the file. <br>
+	 * Returns: An int array of ticket numbers. <br>
+	 * Coder: Aaron Po <br>
+	 * Date: 09-April-2025 <br>
 	 */
 	public static int[] getNextSeries(Scanner fileScnr)
 	{
 		// read each line
 		String line = fileScnr.nextLine();
+		// Create a string array using .split(), with the delim. set to a comma
 		String[] split = line.split(",");
-
-		// convert the string array to an int array
+		// Create an int array to store the numbers
+		//
 		int[] series = new int[split.length];
+		// Iterate through the string array
 		for (int i = 0; i < split.length; i++)
 		{
+			// parse the integer from the value in the split arr.
+			// if the parse doesn't work (invalid integer in the csv file, then catch
+			try
+			{
 			series[i] = Integer.parseInt(split[i].trim());
+			}
+			catch (NumberFormatException e)
+			{
+				// give a warning
+				System.out.println("\tWARNING: NumberFormatException thrown, using -1 as value");
+				System.out.printf("\tInvalid line: %s", line);
+				series[i] = -1; // if the value is invalid, then just put a -1
+			} // end try catch
 		} // END FOR
 
 		// return the int array
 		return series;
-	}
+	} // END METHOD
 
 	/* ----------------------------------------------------------------------------- */
 	/* ----------------------------------------------------------------------------- */
 
 	/**
-	 * This method creates a formatted string that delimits the ticket numbers with
-	 * commas.
-	 *
-	 * @param ticketNumbers - An array of length 6 that contains ticket numbers.
-	 * @return The formatted string.
+	 * Method Name: formatTicketNumbers() <br>
+	 * Purpose: A static class method that formats the ticket numbers into a
+	 * 					string. <br>
+	 * Accepts: An int array of ticket numbers. <br>
+	 * Returns: A string representation of the ticket numbers, separated by commas.
+	 * <br>
+	 * Coder: Aaron Po <br>
+	 * Date: 09-April-2025 <br>
 	 */
 	public static String formatTicketNumbers(int[] ticketNumbers)
 	{
-		/*
-		 * Create an empty string to store the formatted ticket numbers.
-		 *
-		 * Iterate through the ticket numbers array and add each number to the
-		 * string. If the current number is not the last number in the array, add a
-		 * comma and a space after the number.
-		 */
+		// create a string builder instance for our formatted string
 		StringBuilder formattedTicketNumbers = new StringBuilder();
-		boolean isLastIndex;
+
+		// iterate through the ticketNumbers array
 		for (int i = 0; i < ticketNumbers.length; i++)
 		{
-			isLastIndex = i == ticketNumbers.length - 1;
-			formattedTicketNumbers.append(ticketNumbers[i])
-					.append(isLastIndex ? "" : ", ");
+			formattedTicketNumbers
+					.append(ticketNumbers[i]) // append the ticket number to the string builder
+					.append(i == ticketNumbers.length - 1
+							? ""
+							: ", "); // add a comma to all but the last entry
 		} // END FOR
+
+		// return the formatted ticket numbers as a string
 		return formattedTicketNumbers.toString();
-	}
+	} // END METHOD
+
 
 	/* ----------------------------------------------------------------------------- */
 	/* ----------------------------------------------------------------------------- */
 
 	/**
-	 * @return The amount of matching numbers
+	 * Method Name: countMatchingNumbers() <br>
+	 * Purpose: A static class method that counts the number of matching numbers
+	 * 					between a ticket and winning numbers. <br>
+	 * Accepts: Two int arrays, one for the ticket numbers and one for the winning
+	 * 					numbers. <br>
+	 * Returns: The number of matching numbers. <br>
+	 * Coder: Aaron Po <br>
+	 * Date: 09-April-2025 <br>
 	 */
 	public static int countMatchingNumbers(int[] ticketNumbers, int[] winningNumbers)
 	{
-		// Sanity check, ticket numbers and winning numbers should be the same length.
-
+		// Check if both arrays are the same length, if they're not return -1 to indicate error
 		if (ticketNumbers.length != winningNumbers.length)
 		{
+			System.out.println("\tWARNING: One ticket has a different amount of ticket numbers than the winning numbers. " +
+												"This is invalid. Returning -1 as matching numbers count.");
+
+			System.out.println("\n\tINVALID TICKET NUMBER: ");
+			System.out.print("\t");
+			for (int number: ticketNumbers)
+			{
+				System.out.print(number + " ");
+			}
+			System.out.println("\n\n\tWINNING NUMBERS: ");
+			System.out.print("\t");
+			for (int number: winningNumbers)
+			{
+				System.out.print(number + " ");
+			}
 			return -1; // return a negative integer, this would not be possible in normal circumstances
 		} // END IF
 
-		// Create a variable to store the count of matching numbers.
+		// create a variable to store the count of matching numbers
 		int matchingNumbersCount = 0;
 
 		/*
@@ -116,11 +171,13 @@ public class A_P_ProjectMethods
 	/* ----------------------------------------------------------------------------- */
 
 	/**
-	 * Method Name:
-	 * Purpose:
-	 * Accepts:
-	 * Returns:
-	 * Date: 26-March-2025
+	 * Method Name: printTierStats() <br>
+	 * Purpose: A static class method that prints statistical information for each prize tier.<br>
+	 * Accepts: The number of winners, the percentage of the prize pool, the total
+	 * 					prize value, and the prize per ticket. <br>
+	 * Returns: N/A <br>
+	 * Coder: Aaron Po <br>
+	 * Date: 09-April-2025 <br>
 	 */
 	public static void printTierStats(int numWinners, double prizePoolPercent,
 			double totalPrizeValue, double prizePerTicket)
@@ -136,11 +193,12 @@ public class A_P_ProjectMethods
 
 	/**
 	 * Method Name: listWinners() <br>
-	 * Purpose: A static class method that iterates through an array list of winning
-	 * 					numbers and prints formatted output. <br>
-	 * Accepts: <br>
-	 * Returns: <br>
-	 * Date: 26-March-2025 <br>
+	 * Purpose: This method takes an array list of winning numbers and creates a formatted output.<br>
+	 * Accepts: Takes an ArrayList of int arrays which represent the winners
+	 * Returns: N/A <br>
+	 * Coder: Aaron Po <br>
+	 * Date: 09-April-2025 <br>
+
 	 */
 	public static void listWinners(ArrayList<int[]> winners)
 	{
@@ -150,24 +208,23 @@ public class A_P_ProjectMethods
 		{
 			if (i == 0)
 			{
-				// Print initial tab only for the first item.
+				// Print a tab for the first item
 				System.out.print("\t\t");
 			} // END IF
 
-			// If it's an odd index, print an additional tab for alignment.
+			// Print an additional tab if the index is odd
 			if (i % 2 != 0)
 			{
 				System.out.print("\t");
 			} // END IF
 
-			// Format the ticket number for the winner.
+			/// Format the ticket numbers using formatTicketNumbers and then print it with printf()
 			temp = A_P_ProjectMethods.formatTicketNumbers(winners.get(i));
-			System.out.printf("%-30s", temp);
+			System.out.printf("%-30s", temp); // adding padding whitespace
 
-			// If it's an even index, add a tab after the ticket number for alignment.
+			// Add extra tabs if the index is odd
 			if (i % 2 != 0)
 			{
-				// Print a newline for odd index after each ticket number.
 				System.out.println();
 				System.out.print("\t\t\t\t\t\t");
 			} // END IF
